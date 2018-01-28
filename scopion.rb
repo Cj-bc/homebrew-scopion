@@ -51,8 +51,13 @@ class Scopion < Formula
 	test do
 		ohai "Test compiling hello world.."
 
-		system "scopc", "hello.scc", "-o", "hello" # Compile test
+		system "scopc", "#{prefix}/hello_world.scc", "-o", "hello" # Compile test
 		system "./hello"
 
+		if $? == 0 then
+			ohai "scopc compiled test script successfully ;)"
+		else
+			odie "scopc couldn't compile test script... what's wrong!?"
+		end
 	end
 end
