@@ -19,6 +19,7 @@ class Scopion < Formula
 
 
 	bottle do
+		root_url "https://github.com/Cj-bc/homebrew-scopion/blob/master"
 	    sha256 "70dc0512fd976ed01714a6172bcf2b162e5192b2df5936b6a06f77ea5bef7077" => :high_sierra
 	end
 
