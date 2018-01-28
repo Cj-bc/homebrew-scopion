@@ -3,7 +3,7 @@ class Scopion < Formula
 	homepage "https://scopion.coord-e.com/"
 	version "0.0.3.1"
 	url "https://github.com/coord-e/scopion/releases/tag/v#{version}"
-	head "https://github.com/coord-e/scopion.git" :branch => "develop"
+	head "https://github.com/coord-e/scopion.git", :branch => "develop"
 	sha256 ""
 
 	SupportedOSLeast = "10.12"
