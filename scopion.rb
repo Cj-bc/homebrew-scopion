@@ -50,11 +50,21 @@ class Scopion < Formula
 	end
 
 	test do
-		ohai "Test compiling hello world.."
 
-		system "scopc", "#{prefix}/hello_world.scc", "-o", "hello" # Compile test
+		# --------------------- unit test
+.		ohai "running unit test..."
+		system "make", "test" # run unit test (i.e. whether perser is avilable..)
+		if $? == 0 then
+			ohai "unit test end successfully"
+		else
+			odie "unit test failed. OMG, something wrong..Please issue this"
+		end
+
+
+		# -------------------- compile test
+		ohai "running compiling test..."
+		system "scopc", "#{prefix}/hello_world.scc", "-o", "hello"
 		system "./hello"
-
 		if $? == 0 then
 			ohai "scopc compiled test script successfully ;)"
 		else
