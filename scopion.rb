@@ -4,7 +4,7 @@ class Scopion < Formula
 	version "0.0.3.1"
 	url "https://github.com/coord-e/scopion/releases/tag/v#{version}"
 	head "https://github.com/coord-e/scopion.git", :branch => "develop"
-	sha256 ""
+	sha256 "50432ad77d8488c11dbc845f96af2cf8323603f32a2a12bba2b05515e274fd65"
 
 	SupportedOSLeast = "10.12"
 	CPUNumbers = `sysctl -n hw.ncpu`
