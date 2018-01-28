@@ -39,7 +39,6 @@ class Scopion < Formula
   
 		preCheck # check architecture,OS,macOS version
 
-		ohai "debug:", `pwd`, "list:", `ls examples`
 		prefix.install "#{buildpath}/examples/hello_world.scc" # install example program for homebrew test
 
 		mkdir("build")
