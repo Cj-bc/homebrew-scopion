@@ -17,6 +17,13 @@ class Scopion < Formula
 	depends_on "llvm"
 	depends_on "bdw-gc"
 
+
+	bottle do
+	    sha256 "70dc0512fd976ed01714a6172bcf2b162e5192b2df5936b6a06f77ea5bef7077" => :high_sierra
+	end
+
+
+
 	def preCheck
 		# test architecture. x86_64 is needed
 		if Hardware::CPU.is_32_bit? then
