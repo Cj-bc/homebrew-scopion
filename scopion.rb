@@ -2,9 +2,9 @@ class Scopion < Formula
 	desc "a statically-typed functional programming language with powerful objective syntax"
 	homepage "https://scopion.coord-e.com/"
 	version "0.0.3.1"
-	url "https://github.com/coord-e/scopion/releases/tag/v#{version}"
+	url "https://github.com/coord-e/scopion/archive/v#{version}.tar.gz"
 	head "https://github.com/coord-e/scopion.git", :branch => "develop"
-	sha256 "8bcbc2c29337b038d5a2142cf680f8690a96931c99c13dfeae9573b7e0562544"
+	sha256 "74f7cacbd6e4f7544f085f26d39efaf87f6916bc4e40dfc95daf802ae39949b8"
 
 	SupportedOSLeast = "10.12"
 	CPUNumbers = `sysctl -n hw.ncpu`
@@ -39,8 +39,6 @@ class Scopion < Formula
   
 		preCheck # check architecture,OS,macOS version
 
-		prefix.install "#{buildpath}/examples/hello_world.scc" # install example program for homebrew test
-
 		mkdir("build")
 		cd("build")
 		system "cmake", "-DCMAKE_BUILD_TYPE=RELEASE", "-DFORMAT_BEFORE_BUILD=OFF", "-DCMAKE_INSTALL_PREFIX=#{prefix}", ".."
@@ -57,17 +55,6 @@ class Scopion < Formula
 			ohai "unit test end successfully"
 		else
 			odie "unit test failed. OMG, something wrong..Please issue this"
-		end
-
-
-		# -------------------- compile test
-		ohai "running compiling test..."
-		system "scopc", "#{prefix}/hello_world.scc", "-o", "hello"
-		system "./hello"
-		if $? == 0 then
-			ohai "scopc compiled test script successfully \;)"
-		else
-			odie "scopc couldn't compile test script... what's wrong!?"
 		end
 	end
 end
