@@ -1,13 +1,13 @@
+# version 0.0.3.1
+
 class Scopion < Formula
 	desc "a statically-typed functional programming language with powerful objective syntax"
 	homepage "https://scopion.coord-e.com/"
-	version "0.0.3.1"
-	url "https://github.com/coord-e/scopion/archive/v#{version}.tar.gz"
+	url "https://github.com/coord-e/scopion/archive/v0.0.3.1.tar.gz"
 	head "https://github.com/coord-e/scopion.git", :branch => "develop"
 	sha256 "74f7cacbd6e4f7544f085f26d39efaf87f6916bc4e40dfc95daf802ae39949b8"
 
 	SupportedOSLeast = "10.12"
-	CPUNumbers = `sysctl -n hw.ncpu`
 
 	depends_on "cmake" => :build
 	depends_on "wget" 
@@ -17,14 +17,10 @@ class Scopion < Formula
 	depends_on "llvm"
 	depends_on "bdw-gc"
 
-
 	bottle do
-		root_url "https://github.com/Cj-bc/homebrew-scopion/blob/master"
-		sha256 "b84737263e0ee4b11235a8c8bdb691c316d7df3c192d205ca5c6329a27b72f14" => :high_sierra
-	   # sha256 "70dc0512fd976ed01714a6172bcf2b162e5192b2df5936b6a06f77ea5bef7077" => :high_sierra  # default one is this
-	end
-
-
+	    rebuild 1
+	        sha256 "ccb1dc58a8e9d999a288b3fa4a94907172ed1a364b952db039187f7f40e3e4ca" => :high_sierra
+		  end
 
 	def preCheck
 		# test architecture. x86_64 is needed
@@ -51,13 +47,9 @@ class Scopion < Formula
 		mkdir("build")
 		cd("build")
 		system "cmake", "-DCMAKE_BUILD_TYPE=RELEASE", "-DFORMAT_BEFORE_BUILD=OFF", "-DCMAKE_INSTALL_PREFIX=#{prefix}", ".."
-		system "make" #, "-j", "#{CPUNumbers}" #  I Coudn't understand how to use -j command(it occure error)...Left here
-		system "make install" # install
-	end
-
-	test do
-
-		# --------------------- unit test
+		system "make"
+		
+# --------------------- unit test
 		ohai "running unit test..."
 		system "make", "test" # run unit test (i.e. whether perser is avilable..)
 		if $? == 0 then
@@ -65,5 +57,25 @@ class Scopion < Formula
 		else
 			odie "unit test failed. OMG, something wrong..Please issue this"
 		end
+
+		system "make", "install" # install
+	end
+
+	test do
+		# create new script file for test.
+		# this simply output "hello,world"
+		hello_world_text = <<~EOS  # contents of hello_world. <<~ is heredocument
+		(argc, argv){
+		  io = @import#c:stdio.h;
+		  io.printf("Hello, World!\n");
+		  |> 0;
+		}
+		EOS
+		open('.tmp.scc','w'){|f| # make a new file with hello_world_text
+			f.puts hello_world_text 	
+		}
+
+		system "#{bin}/scopc", ".tmp.scc" # compile
+		system "./a.out" # execute
 	end
 end
